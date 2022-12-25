@@ -1,0 +1,33 @@
+class Solution {
+    public int[] answerQueries(int[] nums, int[] queries) {
+      Arrays.sort(nums);
+      //find prefix sum
+      //for each query check in prefix sum till the max end where the prefix sum is less than query
+      for(int i=1;i<nums.length;i++){
+          nums[i]=nums[i]+nums[i-1];  //prefix sum
+    }
+    int ans[]=new int[queries.length];
+      for(int i=0;i<queries.length;i++){
+         //   for(int j=0;j<psum.length;j++){   //TC:O(N^2)
+        //       if(psum[j]<=queries[i]){
+        //            ans[i]=j+1;
+        //       }
+        //   }
+      //apply binary search as prefix sum is  sorted
+            int s=0;  int e=nums.length-1;
+          while(s<=e){
+              int mid=s+(e-s)/2;
+              if(nums[mid]==queries[i]){
+                  ans[i]=mid+1;
+                   break;    }
+              else if(nums[mid]<queries[i]){
+                    ans[i]=mid+1;
+                     s=mid+1;   }
+                 else{
+                  e=mid-1;
+              }
+          }
+      }
+      return ans;
+    }
+}
